@@ -95,6 +95,8 @@ The fixed desktop sidebar is 236px with a matching workspace offset. The top bar
 
 At 1550px and above, the rail is 295px with a 28px gap. At 1250px and below, the sidebar becomes 210px and priority cards stack as horizontal rows. At 1000px and below, the sidebar becomes 190px, the rail moves below content and detail/profile layouts become one column. At 720px and below, navigation becomes a sticky top region with horizontal scrolling links; workspace offset disappears, top bar height is 49px and main padding is 24px 18px 18px. Cards stack vertically.
 
+The college-mail surface uses a bordered split pane with a minimum 270px message column occupying 34% of the panel and a flexible reader. Reader content uses responsive horizontal padding and a 72-character body measure. At 800px and below, selecting a message replaces the list with the reader and exposes a labeled back control. Calendar agenda rows pair the opportunity target with a separate Google Calendar action; on narrow screens the action moves below the row with a full-width 44px minimum target.
+
 ## Elevation & Depth
 
 Persistent surfaces use borders and tonal separation. Cards shift upward 2px and strengthen their border on hover without shadows. Shadows are reserved for toast (0 8px 30px #28203c20), notification panel (0 8px 30px #28203c12) and command palette (0 20px 70px #14112425). The palette uses a dimmed backdrop.
@@ -123,12 +125,21 @@ Resume controls combine a file picker/drop zone, saving/replacement copy, file m
 
 Analyzer review places source entry and editable extracted facts in two columns, stacking below 1000px. Users review requirements and actions, see extraction confidence, and confirm source review before adding the notice. A subordinate impact preview follows the form. Processing feedback uses a small pulsing dot that stops under reduced-motion preferences.
 
+### College mail and calendar handoff
+
+College mail extends the standard panel into an inbox and reader. Search and unread filtering stay in the list pane; selected, unread and starred states combine text weight, background, icons and an indigo unread dot. Message category chips use compact uppercase labels. The reader keeps sender context and body copy quiet, then gives the AI action a pale-indigo panel that leads to a compact result summary and an explicit Add to opportunities action. Empty search and unselected-reader states include an icon and plain-language message. The footer discloses synthetic content and provider behavior.
+
+Agenda rows preserve chronological scanning by putting the date first, title second and destination icon last. The adjacent Google Calendar link uses the secondary action language, an external-tab handoff and a visible calendar-plus icon. Opportunity detail uses the same secondary-button treatment for this handoff.
+
 ## Do's and Don'ts
 
 - Do preserve light surfaces and deadline hierarchy.
 - Do use final secondary ink when adding metadata.
 - Do explain eligibility with profile evidence and label uncertainty.
 - Do retain visible keyboard focus and reduced-motion behavior.
+- Do preserve list-reader hierarchy and a visible mobile route back to the inbox.
+- Do keep calendar handoffs adjacent to the deadline or opportunity they describe.
 - Don't communicate status through color alone.
 - Don't apply attention-panel emphasis to every surface.
 - Don't present seeded notices or local retrieval as live university integration.
+- Don't present the synthetic inbox as a connected campus email account.

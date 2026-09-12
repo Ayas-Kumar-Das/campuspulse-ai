@@ -17,7 +17,8 @@ Open http://localhost:3000. For production: `npm run build` then `npm start`.
 - Opportunity detail with deterministic branch, year, CGPA and backlog comparisons plus original notice evidence.
 - Five switchable student profiles. Rahul (8.1 CGPA) qualifies for Infosys; Aman (6.6) does not.
 - Task completion persisted per student, saved opportunities, hidden notices and profile editing.
-- Monthly calendar, agenda, notifications and downloadable ICS events with a one-day reminder.
+- Monthly calendar, agenda, notifications, downloadable ICS reminders and prefilled Google Calendar events.
+- College Mail inbox at `/mail` with search, unread and starred states, Gemini analysis, and one-click conversion of an email into a tracked opportunity and action plan.
 - Local assistant matching common questions to source-linked campus notices.
 - Notice studio: upload `.txt` or paste text, prepare a rule-based draft, edit fields, review audience eligibility, and publish to the feed. Exact duplicate source text is rejected.
 - Analytics calculated from the local demo data, global search with Ctrl/Cmd+K, responsive layout and keyboard focus states.
@@ -48,13 +49,15 @@ The integration follows [Gemini structured outputs](https://ai.google.dev/gemini
 4. Visit `/profile`, switch to Aman, and reopen Infosys to see the failing CGPA criterion.
 5. Visit `/admin`, choose New notice → Use sample notice → Prepare review.
 6. Review fields, confirm the notice, publish, then find FutureWorks in `/opportunities`.
-7. Visit `/assistant` and ask which deadlines are tomorrow.
+7. Visit `/mail`, analyze the TCS email, and add the extracted result to opportunities.
+8. Open Calendar → Agenda view and add a deadline directly to Google Calendar.
+9. Visit `/assistant` and ask which deadlines are tomorrow.
 
 ## Honest demo boundaries
 
 This implementation is a frontend website with browser-local persistence, not a deployed multi-user backend. All notices and student records are synthetic. The demo clock is fixed to **16 September 2026, 09:00 IST** so the narrative stays reproducible. Clearing browser storage resets it.
 
-There is no authentication, Supabase database, pgvector retrieval, OCR/PDF/DOCX text extraction, email delivery or external application submission. No credentials are needed for demo mode; live AI is optional as described above. Eligibility and impact scores are calculated, while career impact and task effort are transparent planning estimates. Calendar reminders must be imported into the user's calendar. Admin and student roles are demo navigation, not access-control boundaries. Resume storage supports PDFs/DOCX as files without extracting their contents.
+There is no authentication, Supabase database, pgvector retrieval, OCR/PDF/DOCX text extraction, live mailbox sync, email delivery or external application submission. The college inbox uses synthetic messages; connecting a real campus mailbox would require provider OAuth. No credentials are needed for demo mode; live AI is optional as described above. Eligibility and impact scores are calculated, while career impact and task effort are transparent planning estimates. Google Calendar links open a prefilled event that the user reviews and saves; ICS reminders remain available. Admin and student roles are demo navigation, not access-control boundaries. Resume storage supports PDFs/DOCX as files without extracting their contents.
 
 ## Architecture
 
@@ -66,11 +69,13 @@ flowchart LR
   P[Student profile] --> E[Deterministic eligibility]
   L --> E
   E --> D[Personalized feed and source details]
-  D --> T[Tasks and calendar export]
+  D --> T[Tasks and calendar scheduling]
+  M[Synthetic college inbox] --> AI[Gemini email analysis]
+  AI --> L
   L --> A[Local notice assistant]
 ```
 
-`components/campus-app.tsx` owns the application shell and local state; `opportunity-card.tsx` and `notice-admin.tsx` provide reusable feature surfaces. `lib/data.ts` holds typed fixtures, eligibility, date handling and ICS export. Styles are token-based in `app/globals.css`.
+`components/campus-app.tsx` owns the application shell and local state; `college-mail.tsx`, `opportunity-card.tsx` and `notice-admin.tsx` provide reusable feature surfaces. `lib/data.ts` holds typed fixtures, eligibility, date handling, ICS export and Google Calendar link generation. Styles are token-based in `app/globals.css` and `app/upgrade.css`.
 
 ## Verification
 
@@ -83,6 +88,7 @@ npx playwright install chromium
 node tests/browser.mjs
 node tests/upgrade-browser.mjs
 node tests/keyboard.mjs
+node tests/mail-calendar-browser.mjs
 ```
 
 Unit tests cover deterministic eligibility, boundary values, uncertainty and deadline ordering. Browser checks cover dashboard rendering, task completion, student switching, notice publishing, source-grounded assistant results, mobile overflow and runtime errors. Screenshots are in `.impeccable/review/`.

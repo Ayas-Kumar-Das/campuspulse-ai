@@ -37,6 +37,8 @@ import {
   CircleHelp,
   PanelLeftClose,
   ExternalLink,
+  Mail,
+  CalendarPlus,
 } from "lucide-react";
 import {
   initialNotices,
@@ -46,6 +48,7 @@ import {
   eligibility,
   dateLabel,
   calendarDownload,
+  googleCalendarUrl,
   daysLeft,
 } from "@/lib/data";
 import { OpportunityCard } from "./opportunity-card";
@@ -61,6 +64,7 @@ import { NoticeAnalyzer } from "./notice-analyzer";
 import { DecisionAssistant } from "./decision-assistant";
 import { ResumeUpload } from "./resume-upload";
 import { ResumeRecord, getResume } from "@/lib/resume-store";
+import { CollegeMail } from "./college-mail";
 import {
   demoNotices,
   impact,
@@ -76,6 +80,7 @@ const mainNav = [
   ["Opportunities", "/opportunities", Compass],
   ["My tasks", "/tasks", CheckCheck],
   ["Calendar", "/calendar", CalendarDays],
+  ["College mail", "/mail", Mail],
   ["AI assistant", "/assistant", MessageSquare],
   ["Focus mode", "/focus", Clock3],
   ["Analyze notice", "/analyze", FileText],
@@ -632,6 +637,17 @@ export function CampusApp() {
                     <Bell size={16} />
                     Add calendar reminder
                   </button>
+                  {!!googleCalendarUrl(selected) && (
+                    <a
+                      className="secondary-button"
+                      href={googleCalendarUrl(selected)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <CalendarPlus size={16} />
+                      Add to Google Calendar
+                    </a>
+                  )}
                   <button
                     className="secondary-button"
                     onClick={() => toggle(selected.id, saved, setSaved)}
@@ -1154,16 +1170,22 @@ export function CampusApp() {
                           new Date(n.deadline).getFullYear() ===
                             new Date(2026, month, 1).getFullYear(),
                       )
+                      .sort(
+                        (a, b) =>
+                          new Date(a.deadline).getTime() -
+                          new Date(b.deadline).getTime(),
+                      )
                       .map((n) => (
-                        <button
-                          key={n.id}
-                          className="agenda-full"
-                          onClick={() => open(n)}
-                        >
-                          <span>{dateLabel(n.deadline)}</span>
-                          <strong>{n.title}</strong>
-                          <ArrowUpRight size={16} />
-                        </button>
+                        <div key={n.id} className="agenda-full">
+                          <button onClick={() => open(n)}>
+                            <span>{dateLabel(n.deadline)}</span>
+                            <strong>{n.title}</strong>
+                            <ArrowUpRight size={16} />
+                          </button>
+                          <a href={googleCalendarUrl(n)} target="_blank" rel="noopener noreferrer" aria-label={`Add ${n.title} to Google Calendar`}>
+                            <CalendarPlus size={16} /> Add to Google Calendar
+                          </a>
+                        </div>
                       ))}
                   </div>
                 ) : (
@@ -1212,6 +1234,15 @@ export function CampusApp() {
                 )}
               </section>
             </>
+          ) : active === "College mail" ? (
+            <CollegeMail
+              profile={profile}
+              onAdd={(notice) => {
+                setNotices([...notices, notice]);
+                setToast("Email added to opportunities with its action plan.");
+                open(notice);
+              }}
+            />
           ) : active === "AI assistant" ? (
             <DecisionAssistant
               notices={all}

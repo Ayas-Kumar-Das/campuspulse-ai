@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-12T00:00:00Z",
+  "generatedAt": "2026-09-12T12:00:00Z",
   "title": "Design System: CampusPulse AI",
   "extensions": {
     "shadows": [
@@ -14,6 +14,7 @@
     ],
     "breakpoints": [
       { "name": "mobile-max", "value": "720px" },
+      { "name": "mail-stack-max", "value": "800px" },
       { "name": "compact-max", "value": "1000px" },
       { "name": "desktop-compact-max", "value": "1250px" },
       { "name": "wide-min", "value": "1550px" }
@@ -52,17 +53,31 @@
       "name": "Analyzer review",
       "kind": "form",
       "description": "Source and editable facts/actions in two columns, stacked below 1000px; confidence and source-review confirmation precede adding a notice. Includes impact preview and reduced-motion-aware processing feedback."
+    },
+    {
+      "name": "College mail split pane",
+      "kind": "custom",
+      "description": "Bordered inbox and reader with search, unread and starred states, a pale-indigo AI action, clear empty states and a mobile list-to-reader transition below 800px.",
+      "html": "<section class=\"ds-mail-shell\"><aside class=\"ds-mail-list\"><strong>Inbox <span>3</span></strong><label><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg><input aria-label=\"Search college mail\" placeholder=\"Search mail\"></label><button class=\"ds-mail-row\"><b>Placement Cell</b><span>Registration closes tomorrow</span><small>Eligible students can apply before 5 PM.</small></button></aside><article class=\"ds-mail-reader\"><small>PLACEMENT</small><h3>Registration closes tomorrow</h3><p>Read the message, then extract its deadline and next steps.</p><button>Analyze email</button></article></section>",
+      "css": ".ds-mail-shell { display:grid; grid-template-columns:minmax(270px,34%) 1fr; min-height:360px; overflow:hidden; background:#fff; border:1px solid #e7e9ef; border-radius:10px; color:#252735; font-family:'DM Sans Variable',sans-serif; } .ds-mail-list { background:#fafafe; border-right:1px solid #e7e9ef; } .ds-mail-list>strong { display:flex; justify-content:space-between; padding:20px; font-family:'Manrope Variable',sans-serif; } .ds-mail-list>strong span { display:grid; place-items:center; min-width:24px; height:24px; border-radius:999px; background:#5147ce; color:#fff; font-size:11px; } .ds-mail-list label { margin:0 16px 10px; height:39px; padding:0 11px; display:flex; align-items:center; gap:8px; border:1px solid #e7e9ef; border-radius:8px; background:#fff; color:#697080; } .ds-mail-list svg { width:16px; fill:none; stroke:currentColor; stroke-width:2; } .ds-mail-list input { min-width:0; border:0; outline:0; font:inherit; } .ds-mail-row { width:100%; padding:16px 18px; display:grid; gap:5px; text-align:left; border:0; border-top:1px solid #e7e9ef; background:#ebe9fb; color:#252735; cursor:pointer; } .ds-mail-row span { font-size:12px; font-weight:700; } .ds-mail-row small { color:#697080; } .ds-mail-row:hover { background:#f1f0fb; } .ds-mail-row:focus-visible,.ds-mail-reader button:focus-visible { outline:3px solid #9f99ee; outline-offset:-3px; } .ds-mail-reader { padding:30px clamp(24px,5vw,64px); } .ds-mail-reader>small { color:#5549a5; font-size:9px; font-weight:800; letter-spacing:.04em; } .ds-mail-reader h3 { max-width:660px; margin:14px 0 20px; font:700 24px/1.3 'Manrope Variable',sans-serif; } .ds-mail-reader p { max-width:72ch; color:#3d4150; line-height:1.8; } .ds-mail-reader button { margin-top:20px; min-height:36px; padding:10px 14px; border:0; border-radius:7px; background:#5147ce; color:#fff; font-weight:600; cursor:pointer; } .ds-mail-reader button:hover { background:#4137b4; } @media(max-width:800px){.ds-mail-shell{grid-template-columns:1fr}.ds-mail-list{border-right:0}.ds-mail-reader{display:none}}"
+    },
+    {
+      "name": "Calendar agenda handoff",
+      "kind": "custom",
+      "description": "Chronological agenda row with separate opportunity and prefilled Google Calendar destinations; the calendar action becomes a full-width 44px row on narrow screens.",
+      "html": "<div class=\"ds-agenda-row\"><button><span>18 Sep</span><strong>TCS Digital Hiring</strong><b aria-hidden=\"true\">↗</b></button><a href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14H3V6a2 2 0 0 1 2-2Z\"/><path d=\"M12 14v6M9 17h6\"/></svg>Add to Google Calendar</a></div>",
+      "css": ".ds-agenda-row { display:flex; overflow:hidden; border:1px solid #e7e9ef; border-radius:10px; background:#fff; font-family:'DM Sans Variable',sans-serif; } .ds-agenda-row>button { flex:1; min-width:0; padding:16px; display:grid; grid-template-columns:100px 1fr auto; gap:14px; align-items:center; text-align:left; border:0; background:#fff; color:#252735; cursor:pointer; } .ds-agenda-row>a { min-height:44px; padding:0 16px; display:flex; align-items:center; gap:7px; border-left:1px solid #e7e9ef; color:#5147ce; font-size:11px; font-weight:800; text-decoration:none; } .ds-agenda-row svg { width:16px; fill:none; stroke:currentColor; stroke-width:2; } .ds-agenda-row>button:hover,.ds-agenda-row>a:hover { background:#f0eefb; } .ds-agenda-row>button:focus-visible,.ds-agenda-row>a:focus-visible { outline:3px solid #9f99ee; outline-offset:-3px; } @media(max-width:800px){.ds-agenda-row{flex-direction:column}.ds-agenda-row>button{width:100%;grid-template-columns:70px 1fr auto}.ds-agenda-row>a{justify-content:center;border-left:0;border-top:1px solid #e7e9ef}}"
     }
   ],
   "narrative": {
     "northStar": "A calm student action workspace",
     "overview": "Operate mode: light surfaces, restrained indigo and compact information. Deadlines lead; profile-based eligibility makes opportunities explainable.",
-    "keyCharacteristics": ["Clear action hierarchy", "White bordered surfaces", "Restrained indigo", "Explainable status", "Responsive navigation"],
+    "keyCharacteristics": ["Clear action hierarchy", "White bordered surfaces", "Restrained indigo", "Explainable status", "Responsive navigation", "Responsive list-reader workflows", "Adjacent calendar handoffs"],
     "rules": [
       { "name": "Readable secondary ink", "body": "Use final stylesheet overrides for metadata, assistant copy and urgent deadlines.", "section": "colors" },
       { "name": "Transient elevation", "body": "Reserve shadows for toasts, notifications and command palette.", "section": "elevation" }
     ],
-    "dos": ["Do prioritize deadlines.", "Do explain eligibility with profile evidence.", "Do preserve focus and reduced motion."],
-    "donts": ["Don't communicate status through color alone.", "Don't emphasize every surface with indigo.", "Don't imply demo retrieval is live integration."]
+    "dos": ["Do prioritize deadlines.", "Do explain eligibility with profile evidence.", "Do preserve focus and reduced motion.", "Do preserve list-reader hierarchy and a visible mobile route back to the inbox.", "Do keep calendar handoffs adjacent to the deadline or opportunity they describe."],
+    "donts": ["Don't communicate status through color alone.", "Don't emphasize every surface with indigo.", "Don't imply demo retrieval is live integration.", "Don't present the synthetic inbox as a connected campus email account."]
   }
 }

@@ -292,3 +292,19 @@ export function calendarDownload(n: Notice) {
   a.click();
   URL.revokeObjectURL(url);
 }
+
+export function googleCalendarUrl(n: Notice) {
+  if (!n.deadline || !Number.isFinite(Date.parse(n.deadline))) return "";
+  const startDate = new Date(n.deadline);
+  const endDate = new Date(startDate.getTime() + 30 * 60 * 1000);
+  const format = (date: Date) =>
+    date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: `Deadline: ${n.title}`,
+    dates: `${format(startDate)}/${format(endDate)}`,
+    details: `${n.summary}\n\nSource: ${n.org}\nTracked with CampusPulse AI.`,
+    ctz: "Asia/Kolkata",
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
