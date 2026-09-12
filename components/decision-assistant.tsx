@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, Activity } from "lucide-react";
 import { Notice, Profile } from "@/lib/data";
 import { Progress, impact, deadlineText } from "@/lib/intelligence";
@@ -28,6 +28,7 @@ export function DecisionAssistant({
   const [ai, setAi] = useState("");
   const [mode, setMode] = useState("Local decision engine");
   const [busy, setBusy] = useState(false);
+  const requestId = useRef(0);
   const answer = answerQuery(
     question,
     notices,
@@ -42,29 +43,41 @@ export function DecisionAssistant({
     setQuestion(q);
     setAi("");
     setMode("Local decision engine");
+    const decided = answerQuery(
+      q,
+      notices,
+      profile,
+      progress,
+      resume,
+      done,
+      shortlists,
+    );
+    await explain(q, decided);
   }
-  async function explain() {
+  async function explain(q = question, decided = answer) {
+    const currentRequest = ++requestId.current;
     setBusy(true);
     try {
       const response = await fetch("/api/query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          question,
+          question: q,
           facts: JSON.stringify({
-            title: answer.title,
-            explanation: answer.explanation,
-            notices: answer.results.map((n) => ({
+            title: decided.title,
+            explanation: decided.explanation,
+            notices: decided.results.map((n) => ({
               id: n.id,
               title: n.title,
               source: n.source,
               impact: impact(n, profile),
             })),
           }),
-          sourceIds: answer.results.map((n) => n.id),
+          sourceIds: decided.results.map((n) => n.id),
         }),
       });
       const body = await response.json();
+      if (currentRequest !== requestId.current) return;
       setMode(body.mode);
       setAi(
         body.explanation ||
@@ -72,11 +85,12 @@ export function DecisionAssistant({
           "Live AI is not configured. Your answer above uses the local decision engine.",
       );
     } catch {
+      if (currentRequest !== requestId.current) return;
       setAi(
         "Live explanation is unavailable. Your local decision remains available.",
       );
     } finally {
-      setBusy(false);
+      if (currentRequest === requestId.current) setBusy(false);
     }
   }
   return (
@@ -134,8 +148,12 @@ export function DecisionAssistant({
               your profile.
             </p>
           )}
-          <button className="text-button" disabled={busy} onClick={explain}>
-            {busy ? "Writing explanation…" : "Explain with connected AI"}
+          <button
+            className="text-button"
+            disabled={busy}
+            onClick={() => void explain()}
+          >
+            {busy ? "Gemini is writing…" : "Regenerate Gemini explanation"}
           </button>
           {ai && <p className="notice-info">{ai}</p>}
           <small className="demo-disclosure">{mode}</small>

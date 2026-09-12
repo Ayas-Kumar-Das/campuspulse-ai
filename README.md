@@ -36,9 +36,9 @@ Open http://localhost:3000. For production: `npm run build` then `npm start`.
 
 ### Optional live AI
 
-Copy `.env.example` to `.env.local`, set `OPENAI_API_KEY` and `OPENAI_MODEL` to a Responses-compatible structured-output model available to your account, and restart the dev server. Never put the key in a `NEXT_PUBLIC_` variable. With no credentials or a provider error, the website explicitly shows the local fallback. Live provider calls require credentials and were not exercised in the credential-free tests.
+Copy `.env.example` to `.env.local`, set `GEMINI_API_KEY` and `GEMINI_MODEL`, and restart the dev server. Never put the key in a `NEXT_PUBLIC_` variable. The current tested model is `gemini-3.6-flash`. With no credentials or a provider error, the website explicitly shows the local fallback.
 
-The integration follows [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs). Scores and final eligibility remain deterministic. Notice analysis sends only pasted notice text; optional assistant explanations send the current decision facts and referenced notices, never the resume file.
+The integration follows [Gemini structured outputs](https://ai.google.dev/gemini-api/docs/structured-output). Scores and final eligibility remain deterministic. Notice analysis sends only pasted notice text; assistant explanations send the current decision facts and referenced notices, never the resume file. Gemini responses are validated with the same Zod schemas before the app uses them.
 
 ## Demo journey
 
