@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-12T00:00:00Z",
+  "title": "Design System: CampusPulse AI",
+  "extensions": {
+    "shadows": [
+      { "name": "toast", "value": "0 8px 30px #28203c20", "purpose": "Transient feedback." },
+      { "name": "notification", "value": "0 8px 30px #28203c12", "purpose": "Notification overlay." },
+      { "name": "command-palette", "value": "0 20px 70px #14112425", "purpose": "Search dialog." }
+    ],
+    "motion": [
+      { "name": "state-transition", "value": "0.18s", "purpose": "State transitions; disabled under prefers-reduced-motion." },
+      { "name": "card-hover", "value": "translateY(-2px)", "purpose": "Card feedback; disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-max", "value": "720px" },
+      { "name": "compact-max", "value": "1000px" },
+      { "name": "desktop-compact-max", "value": "1250px" },
+      { "name": "wide-min", "value": "1550px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Compact indigo action with keyboard focus.",
+      "html": "<button class=\"primary-button\">Add to my tasks</button>",
+      "css": ".primary-button { font: 500 11px 'DM Sans Variable', sans-serif; background: #5147ce; color: #fff; border: 0; border-radius: 7px; min-height: 36px; padding: 10px 14px; cursor: pointer; transition: background .18s; } .primary-button:hover { background: #4137b4; } .primary-button:focus-visible { outline: 3px solid #9f99ee; outline-offset: 3px; } @media (prefers-reduced-motion: reduce) { .primary-button { transition: none; } }"
+    },
+    {
+      "name": "Opportunity impact breakdown",
+      "kind": "panel",
+      "description": "Existing light panel with indigo score, deadline/effort metadata and native disclosure containing labeled meters, numeric values, profile evidence and estimate caveat."
+    },
+    {
+      "name": "Action stepper",
+      "kind": "stepper",
+      "description": "Numbered circles and thin connectors; check/lock icons accompany textual ready, resume-required, conditional, locked, skipped and completed states. Mark done/Undo and shortlist controls support preparation tracking."
+    },
+    {
+      "name": "Focus budget",
+      "kind": "input",
+      "description": "Pressed-state 15/30/60-minute presets and custom draft input; blur or Enter commits a rounded 5–180-minute budget to the heading and ordered action plan."
+    },
+    {
+      "name": "Resume file controls",
+      "kind": "upload",
+      "description": "File picker/drop zone with saving and replacement states, wrapping filename and metadata, labeled download/remove buttons, error alert and browser-only privacy disclosure."
+    },
+    {
+      "name": "Analyzer review",
+      "kind": "form",
+      "description": "Source and editable facts/actions in two columns, stacked below 1000px; confidence and source-review confirmation precede adding a notice. Includes impact preview and reduced-motion-aware processing feedback."
+    }
+  ],
+  "narrative": {
+    "northStar": "A calm student action workspace",
+    "overview": "Operate mode: light surfaces, restrained indigo and compact information. Deadlines lead; profile-based eligibility makes opportunities explainable.",
+    "keyCharacteristics": ["Clear action hierarchy", "White bordered surfaces", "Restrained indigo", "Explainable status", "Responsive navigation"],
+    "rules": [
+      { "name": "Readable secondary ink", "body": "Use final stylesheet overrides for metadata, assistant copy and urgent deadlines.", "section": "colors" },
+      { "name": "Transient elevation", "body": "Reserve shadows for toasts, notifications and command palette.", "section": "elevation" }
+    ],
+    "dos": ["Do prioritize deadlines.", "Do explain eligibility with profile evidence.", "Do preserve focus and reduced motion."],
+    "donts": ["Don't communicate status through color alone.", "Don't emphasize every surface with indigo.", "Don't imply demo retrieval is live integration."]
+  }
+}

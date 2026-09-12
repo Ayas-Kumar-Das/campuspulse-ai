@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.env*
+!.env.example
+playwright-report/
+test-results/
+*.log
+*.tsbuildinfo
+.agent/
+.agents/
+.codex/
+.gemini/
+.impeccable/review/
